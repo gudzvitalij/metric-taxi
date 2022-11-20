@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/taxi
+    username: vitaly
+    password: some1pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+coordinate:
+  start-longitude: 50.189683
+  start-latitude: 53.222579
+  finish-longitude: 50.102834
+  finish-latitude: 53.199131

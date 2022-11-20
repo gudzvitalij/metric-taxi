@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:13.3
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: vitaly
+      POSTGRES_PASSWORD: some1pass
+      POSTGRES_DB: taxi
