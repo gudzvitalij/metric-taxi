@@ -7,7 +7,7 @@ spring:
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: true
 
 coordinate:
@@ -15,3 +15,19 @@ coordinate:
   start-latitude: 53.222579
   finish-longitude: 50.102834
   finish-latitude: 53.199131
+
+
+yandex:
+  url: https://taxi-routeinfo.taxi.yandex.net/taxi_info
+  clid: ${YANDEX_CLID}
+  apiKey: ${YANDEX_APIKEY}
+
+management:
+  endpoints.web.exposure.include: 'prometheus, health'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
