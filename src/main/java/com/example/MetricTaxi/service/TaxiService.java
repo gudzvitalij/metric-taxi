@@ -6,19 +6,29 @@ import com.example.MetricTaxi.model.MomentPrice;
 import com.example.MetricTaxi.model.Price;
 import com.example.MetricTaxi.properties.YandexProperties;
 import com.example.MetricTaxi.repository.PriceRepository;
-import lombok.RequiredArgsConstructor;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-@RequiredArgsConstructor
 public class TaxiService {
-    private final YandexProperties yandexProperties;
     private final TaxiApiClient taxiApiClient;
     private final PriceRepository priceRepository;
+    private final YandexProperties yandexProperties;
+    private AtomicInteger price;
+
+
+    public TaxiService(YandexProperties yandexProperties, TaxiApiClient taxiApiClient, PriceRepository priceRepository, MeterRegistry meterRegistry) {
+        this.yandexProperties = yandexProperties;
+        this.taxiApiClient = taxiApiClient;
+        this.priceRepository = priceRepository;
+        price = new AtomicInteger();
+        meterRegistry.gauge("priceTaxi",price);
+    }
 
     public void getPrice(Coordinate startPoint, Coordinate endPoint) {
         String rll = startPoint.toString() + "~" + endPoint.toString();
@@ -30,6 +40,7 @@ public class TaxiService {
             throw new RuntimeException("Options are empty");
         }
         double priceDouble = currentPrice.getOptions().get(0).getPrice();
+        price.set((int)priceDouble);
         MomentPrice momentPrice = new MomentPrice(
                 LocalDateTime.now(ZoneId.of("Europe/Moscow")),
                 priceDouble
