@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "yandexclient", url = "${yandex.url}")
 public interface TaxiApiClient {
-    @Timed
+    @Timed("gettingPriceFromYandex")
     @GetMapping
     Price getPrice(@RequestParam String clid, @RequestParam String apiKey, @RequestParam String rll);
 }

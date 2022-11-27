@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/taxi
+    url: jdbc:postgresql://localhost:5430/taxi
     username: vitaly
     password: some1pass
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     show-sql: true
 
 coordinate:

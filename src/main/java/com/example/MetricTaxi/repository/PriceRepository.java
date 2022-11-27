@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface PriceRepository extends CrudRepository<MomentPrice,Long> {
-    @Timed
+    @Timed("gettingAllPrices")
     List<MomentPrice> findAll();
 }
